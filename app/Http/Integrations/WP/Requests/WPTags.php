@@ -18,7 +18,9 @@ class WPTags extends Request
 
     protected function defaultQuery(): array
     {
-        return $this->params->all();
+        return array_merge([
+            '_fields' => 'id'
+        ], $this->params->all());
     }
 
     public function resolveEndpoint(): string
