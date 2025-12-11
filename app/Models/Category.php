@@ -10,7 +10,7 @@ class Category extends Model
     protected $table = 'wp_data';
 
     protected $casts = [
-        'data' => WPCategoryResponse::class
+        'data' => 'array'
     ];
 
     public function newEloquentBuilder($query)

@@ -11,7 +11,7 @@ class Tag extends Model
     protected $table = 'wp_data';
 
     protected $casts = [
-        'data' => WPTagResponse::class
+        'data' => 'array'
     ];
 
     public function newEloquentBuilder($query)
