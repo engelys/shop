@@ -2,11 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Tag extends Model
+class Tag extends WpData
 {
-    use HasWpData;
-
-    protected $type = 'tag';
+    protected string $wp_record_type = 'tag';
 }

@@ -2,11 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Attribute extends Model
+class Attribute extends WpData
 {
-    use HasWpData;
-
-    protected $type = 'attribute';
+    protected string $wp_record_type = 'attribute';
 }

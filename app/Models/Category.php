@@ -2,11 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Category extends Model
+class Category extends WpData
 {
-    use HasWpData;
-
-    protected $type = 'category';
+    protected string $wp_record_type = 'category';
 }

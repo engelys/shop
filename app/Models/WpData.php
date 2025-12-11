@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-trait HasWpData
-{
-    protected $type;
+use Illuminate\Database\Eloquent\Model;
 
+class WpData extends Model
+{
     protected $table = 'wp_data';
 
     protected $casts = [
@@ -15,6 +15,6 @@ trait HasWpData
     public function newEloquentBuilder($query)
     {
         return parent::newEloquentBuilder($query)
-            ->where('type', $this->type);
+            ->where('type', $this->wp_record_type);
     }
 }
