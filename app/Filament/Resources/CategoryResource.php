@@ -23,7 +23,14 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('data.name'),
+                Forms\Components\TextInput::make('data.slug'),
+                Forms\Components\TextInput::make('data.parent'),
+                Forms\Components\Textarea::make('data.description'),
+                Forms\Components\TextInput::make('data.display'),
+                Forms\Components\TextInput::make('data.image'),
+                Forms\Components\TextInput::make('data.menu_order'),
+                Forms\Components\TextInput::make('data.count'),
             ]);
     }
 
@@ -31,7 +38,8 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('data.name')->label('Name'),
+                Tables\Columns\TextColumn::make('data.slug')->label('Slug'),
             ])
             ->filters([
                 //
