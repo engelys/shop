@@ -2,6 +2,11 @@
 
 namespace App\Http\Integrations\WP;
 
+use Illuminate\Support\Facades\Cache;
+use Saloon\CachePlugin\Contracts\Cacheable;
+use Saloon\CachePlugin\Contracts\Driver;
+use Saloon\CachePlugin\Drivers\LaravelCacheDriver;
+use Saloon\CachePlugin\Traits\HasCaching;
 use Saloon\Http\Response;
 use Saloon\Http\Connector;
 use Saloon\Contracts\Authenticator;
@@ -12,12 +17,18 @@ use Saloon\Http\Auth\QueryAuthenticator;
 use App\Http\Integrations\HasDTOGenerator;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
 
-class WPConnector extends Connector
+class WPConnector extends Connector implements Cacheable
 {
     use AcceptsJson;
     use HasTimeout;
+    use HasCaching;
     use CreatesDtoFromResponse;
     use HasDTOGenerator;
+
+    public function resolveCacheDriver(): Driver
+    {
+        return new LaravelCacheDriver(Cache::store('redis'));
+    }
 
     protected int $connectTimeout = 60;
 
