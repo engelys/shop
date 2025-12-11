@@ -85,9 +85,9 @@ class WPProductResponse extends JSONModel
     public ?string $sku = null;
 
     /**
-     * @var ?string
+     * @var ?int
      */
-    public ?string $price = null;
+    public ?int $price = null;
 
     /**
      * @var ?string
@@ -309,13 +309,13 @@ class WPProductResponse extends JSONModel
     /**
      * @var array<string>
      */
-    #[AsArray(itemType: 'string')]
+    #[AsArray(itemType: WPProductResponseDefaultAttribute::class)]
     public array $default_attributes = [];
 
     /**
      * @var array<string>
      */
-    #[AsArray(itemType: 'string')]
+    #[AsArray(itemType: 'integer')]
     public array $variations = [];
 
     /**
