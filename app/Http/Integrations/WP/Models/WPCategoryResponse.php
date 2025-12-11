@@ -52,9 +52,4 @@ class WPCategoryResponse extends JSONModel
      * @var ?int
      */
     public ?int $count = null;
-
-    /**
-     * @var ?WPCategoryResponseLinks
-     */
-    public ?WPCategoryResponseLinks $_links = null;
 }

@@ -32,9 +32,4 @@ class WPTagResponse extends JSONModel
      * @var ?int
      */
     public ?int $count = null;
-
-    /**
-     * @var ?WPTagResponseLinks
-     */
-    public ?WPTagResponseLinks $_links = null;
 }
