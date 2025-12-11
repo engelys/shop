@@ -2,14 +2,14 @@
 
 namespace App\Http\Integrations\WP;
 
-use App\Http\Integrations\HasDTOGenerator;
+use Saloon\Http\Response;
 use Saloon\Http\Connector;
 use Saloon\Contracts\Authenticator;
-use Saloon\Http\Response;
+use Saloon\Traits\Plugins\HasTimeout;
 use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Http\Auth\MultiAuthenticator;
 use Saloon\Http\Auth\QueryAuthenticator;
-use Saloon\Traits\Plugins\HasTimeout;
+use App\Http\Integrations\HasDTOGenerator;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
 
 class WPConnector extends Connector
@@ -24,17 +24,16 @@ class WPConnector extends Connector
     protected int $requestTimeout = 120;
 
     public function __construct(
-        protected string $host,
+        protected string $endpoint,
         protected string $consumer_key,
         protected string $consumer_secret,
     )
     {
-
     }
 
     public function resolveBaseUrl(): string
     {
-        return $this->host;
+        return $this->endpoint;
     }
 
     protected function defaultAuth(): ?Authenticator
