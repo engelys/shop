@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('display')->nullable()->comment('display enum');
             $table->integer('menu_order')->nullable();
-            $table->text('default_description')->nullable();
+            $table->text('description')->nullable();
             $table->json('descriptions')->nullable()->comment('description translations');
             $table->timestamps();
 
