@@ -2,17 +2,17 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ProductStatus;
+use App\Enums\ProductStockStatus;
+use App\Enums\ProductType;
 use App\Filament\Resources\ProductResource\Pages;
 
-// use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductResource extends Resource
 {
@@ -23,46 +23,35 @@ class ProductResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            // translatable
-            Forms\Components\TextInput::make('data.name'),
-            // auto filled unique slug from name
-            Forms\Components\TextInput::make('data.slug')->readOnly(),
 
-            Forms\Components\TextInput::make('data.type'),
-            Forms\Components\TextInput::make('data.status'),
-            Forms\Components\TextInput::make('data.catalog_visibility'),
+            Forms\Components\TextInput::make('name'),
+            Forms\Components\TextInput::make('slug')->readOnly(),
 
-            Forms\Components\Textarea::make('data.description'),
-            Forms\Components\Textarea::make('data.short_description'),
+            Forms\Components\TextInput::make('type'),
+            Forms\Components\TextInput::make('status'),
+            Forms\Components\TextInput::make('catalog_visibility'),
 
-            Forms\Components\TextInput::make('data.sku'),
+            Forms\Components\Textarea::make('description'),
+            Forms\Components\Textarea::make('short_description'),
 
-            Forms\Components\TextInput::make('data.price'),
-            Forms\Components\TextInput::make('data.regular_price'),
-            Forms\Components\TextInput::make('data.sale_price'),
-            Forms\Components\Toggle::make('data.on_sale'),
-            Forms\Components\Toggle::make('data.purchasable'),
-            Forms\Components\Toggle::make('data.virtual'),
-            Forms\Components\Toggle::make('data.downloadable'),
+            Forms\Components\TextInput::make('sku'),
 
-            Forms\Components\Toggle::make('data.manage_stock'),
-            Forms\Components\TextInput::make('data.stock_quantity'),
-            Forms\Components\TextInput::make('data.stock_status'),
-            Forms\Components\TextInput::make('data.low_stock_amount'),
-            Forms\Components\Toggle::make('data.sold_individually'),
-            Forms\Components\Toggle::make('data.has_options'),
+            Forms\Components\TextInput::make('price'),
+            Forms\Components\TextInput::make('regular_price'),
+            Forms\Components\TextInput::make('sale_price'),
+            Forms\Components\Toggle::make('on_sale'),
+            Forms\Components\Toggle::make('purchasable'),
+            Forms\Components\Toggle::make('virtual'),
+            Forms\Components\Toggle::make('downloadable'),
 
-            Forms\Components\TextInput::make('data.parent_id'),
-            Forms\Components\TextInput::make('data.categories'),
-            Forms\Components\TextInput::make('data.tags'),
-            Forms\Components\TextInput::make('data.images'),
-            Forms\Components\TextInput::make('data.attributes'),
-            Forms\Components\TextInput::make('data.default_attributes'),
-            Forms\Components\TextInput::make('data.variations'),
-            Forms\Components\TextInput::make('data.related_ids'),
+            Forms\Components\Toggle::make('manage_stock'),
+            Forms\Components\TextInput::make('stock_quantity'),
+            Forms\Components\TextInput::make('stock_status'),
+            Forms\Components\TextInput::make('low_stock_amount'),
+            Forms\Components\Toggle::make('sold_individually'),
+            Forms\Components\Toggle::make('has_options'),
 
-            Forms\Components\TextInput::make('data.menu_order'),
-
+            Forms\Components\TextInput::make('parent_id'),
         ]);
     }
 
@@ -70,15 +59,39 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('data.name')->label('Name'),
-                // auto filled unique slug from name
-                Tables\Columns\TextColumn::make('data.slug')->label('Slug'),
+                Tables\Columns\TextColumn::make('id')
+                    ->label('ID')
+                    ->sortable(),
 
-                Tables\Columns\TextColumn::make('data.type')->label('Type'),
-                Tables\Columns\TextColumn::make('data.status')->label('Status'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Name')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('type')
+                    ->label('Type')
+                    ->badge()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
+                    ->badge()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('stock_status')
+                    ->label('In Stock')
+                    ->badge()
+                    ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('type')
+                    ->options(ProductType::class),
+
+                Tables\Filters\SelectFilter::make('status')
+                    ->options(ProductStatus::class),
+
+                Tables\Filters\SelectFilter::make('stock_status')
+                    ->options(ProductStockStatus::class),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

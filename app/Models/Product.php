@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\ProductStatus;
+use App\Enums\ProductStockStatus;
+use App\Enums\ProductType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -10,6 +13,10 @@ class Product extends Model
     protected $guarded = false;
 
     protected $casts = [
+        'type' => ProductType::class,
+        'status' => ProductStatus::class,
+        'stock_status' => ProductStockStatus::class,
+
         'names' => 'array',
         'descriptions' => 'array',
         'short_descriptions' => 'array',
