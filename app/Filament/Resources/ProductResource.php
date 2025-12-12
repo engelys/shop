@@ -68,8 +68,18 @@ class ProductResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('type')
-                    ->label('Type')
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
+                    ->badge()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('price')
+                    ->label('Price'),
+
+                Tables\Columns\TextColumn::make('stock_quantity')
+                    ->label('In Stock')
+                    ->color(fn ($record) => filled($record->stock_quantity) ? 'success' : 'danger')
+                    ->getStateUsing(fn ($record) => empty($record->stock_quantity) ? $record->stock_status : $record->stock_quantity)
                     ->badge()
                     ->sortable(),
 
@@ -78,16 +88,6 @@ class ProductResource extends Resource
                     ->label('Categories')
                     ->getStateUsing(fn ($record) => $record->categories->pluck('name'))
                     ->badge(),
-
-                Tables\Columns\TextColumn::make('status')
-                    ->label('Status')
-                    ->badge()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('stock_status')
-                    ->label('In Stock')
-                    ->badge()
-                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('type')
