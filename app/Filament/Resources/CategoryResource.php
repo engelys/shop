@@ -23,14 +23,16 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('data.name'),
-                Forms\Components\TextInput::make('data.slug'),
-                Forms\Components\TextInput::make('data.parent'),
-                Forms\Components\Textarea::make('data.description'),
-                Forms\Components\TextInput::make('data.display'),
-                Forms\Components\TextInput::make('data.image'),
-                Forms\Components\TextInput::make('data.menu_order'),
-                Forms\Components\TextInput::make('data.count'),
+                Forms\Components\TextInput::make('name'),
+                // Forms\Components\TextInput::make('names'),
+                Forms\Components\TextInput::make('slug'),
+                Forms\Components\TextInput::make('parent_id'),
+                Forms\Components\Textarea::make('description'),
+                // Forms\Components\Textarea::make('descriptions'),
+                Forms\Components\TextInput::make('display'),
+                // Forms\Components\TextInput::make('image'),
+                Forms\Components\TextInput::make('menu_order'),
+                Forms\Components\TextInput::make('count'),
             ]);
     }
 
@@ -38,8 +40,9 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('data.name')->label('Name'),
-                Tables\Columns\TextColumn::make('data.slug')->label('Slug'),
+                Tables\Columns\TextColumn::make('id')->label('Id'),
+                Tables\Columns\TextColumn::make('name')->label('Name'),
+                Tables\Columns\TextColumn::make('slug')->label('Slug'),
             ])
             ->filters([
                 //
