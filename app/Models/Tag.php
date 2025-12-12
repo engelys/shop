@@ -2,7 +2,16 @@
 
 namespace App\Models;
 
-class Tag extends WpData
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Tag extends Model
 {
-    protected string $wp_record_type = 'tag';
+    public $incrementing = false;
+    protected $keyType = 'int';
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'product_tags');
+    }
 }
