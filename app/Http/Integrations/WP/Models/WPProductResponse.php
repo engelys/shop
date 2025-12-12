@@ -85,9 +85,9 @@ class WPProductResponse extends JSONModel
     public ?string $sku = null;
 
     /**
-     * @var ?int
+     * @var ?string
      */
-    public ?int $price = null;
+    public ?string $price = null;
 
     /**
      * @var ?string
