@@ -73,6 +73,12 @@ class ProductResource extends Resource
                     ->badge()
                     ->sortable(),
 
+                Tables\Columns\TextColumn::make('categories_list')
+                    ->listWithLineBreaks()
+                    ->label('Categories')
+                    ->getStateUsing(fn ($record) => $record->categories->pluck('name'))
+                    ->badge(),
+
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
