@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->json('names')->comment('name translations');
             $table->string('slug');
 
             $table->string('permalink')->nullable();
@@ -27,11 +28,14 @@ return new class extends Migration {
             $table->string('weight')->nullable();
             $table->string('shipping_class')->nullable();
             $table->string('average_rating')->nullable();
-            $table->string('price_html')->nullable();
             $table->string('stock_status')->nullable();
 
+            $table->text('price_html')->nullable();
             $table->text('description')->nullable();
             $table->text('short_description')->nullable();
+
+            $table->json('descriptions')->nullable()->comment('description translations');
+            $table->json('short_descriptions')->nullable()->comment('short_description translations');
 
             $table->boolean('featured')->nullable();
             $table->boolean('on_sale')->nullable();
