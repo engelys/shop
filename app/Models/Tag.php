@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Tag extends Model
 {
     public $incrementing = false;
+
     protected $keyType = 'int';
+
+    protected $guarded = false;
+
+    protected $casts = [
+        'names' => 'array',
+        'descriptions' => 'array',
+    ];
 
     public function products(): BelongsToMany
     {
