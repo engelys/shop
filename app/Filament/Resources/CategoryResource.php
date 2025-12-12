@@ -2,16 +2,14 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Models\Category;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Category;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Enums\CategoryDisplay;
+use Filament\Resources\Resource;
+use App\Filament\Resources\CategoryResource\Pages;
 
 class CategoryResource extends Resource
 {
@@ -24,15 +22,18 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name'),
-                // Forms\Components\TextInput::make('names'),
-                Forms\Components\TextInput::make('slug'),
-                Forms\Components\TextInput::make('parent_id'),
+                Forms\Components\TextInput::make('slug')->disabled(),
+
                 Forms\Components\Textarea::make('description'),
-                // Forms\Components\Textarea::make('descriptions'),
-                Forms\Components\TextInput::make('display'),
-                // Forms\Components\TextInput::make('image'),
-                Forms\Components\TextInput::make('menu_order'),
-                Forms\Components\TextInput::make('count'),
+                Forms\Components\ToggleButtons::make('display')
+                    ->inline()
+                    ->grouped()
+                    ->options(CategoryDisplay::class),
+
+                Forms\Components\Select::make('parent_id')
+                    ->relationship(name: 'parent', titleAttribute: 'name', ignoreRecord: true)
+                    ->optionsLimit(10)
+                    ->searchable(),
             ]);
     }
 
@@ -40,12 +41,24 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->label('Id'),
-                Tables\Columns\TextColumn::make('name')->label('Name'),
-                Tables\Columns\TextColumn::make('slug')->label('Slug'),
+                Tables\Columns\TextColumn::make('id')
+                    ->label('Id')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('display')
+                    ->label('Display')
+                    ->sortable()
+                    ->badge(),
+                Tables\Columns\TextColumn::make('count')
+                    ->label('Count')
+                    ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('display')
+                    ->options(CategoryDisplay::class)
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -55,13 +68,6 @@ class CategoryResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
