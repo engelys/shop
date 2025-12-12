@@ -23,10 +23,9 @@ class TagResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('data.name'),
-                Forms\Components\TextInput::make('data.slug'),
-                Forms\Components\Textarea::make('data.description'),
-                Forms\Components\TextInput::make('data.count'),
+                Forms\Components\TextInput::make('name'),
+                Forms\Components\TextInput::make('slug')->disabled(),
+                Forms\Components\Textarea::make('description'),
             ]);
     }
 
@@ -34,8 +33,9 @@ class TagResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('data.name')->label('Name'),
-                Tables\Columns\TextColumn::make('data.slug')->label('Slug'),
+                Tables\Columns\TextColumn::make('name')->label('Name'),
+                Tables\Columns\TextColumn::make('slug')->label('Slug'),
+                Tables\Columns\TextColumn::make('count')->label('Count'),
             ])
             ->filters([
                 //
