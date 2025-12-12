@@ -2,7 +2,13 @@
 
 namespace App\Models;
 
-class Product extends WpData
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Product extends Model
 {
-    protected string $wp_record_type = 'product';
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'product_categories');
+    }
 }
