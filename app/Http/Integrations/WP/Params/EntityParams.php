@@ -2,9 +2,9 @@
 
 namespace App\Http\Integrations\WP\Params;
 
-use Spatie\LaravelData\Data;
+use App\DTOs\AutoConstructData;
 
-class EntityParams extends Data
+class EntityParams extends AutoConstructData
 {
     public int $id;
 }

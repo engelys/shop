@@ -14,26 +14,22 @@ class FetchWpData
     // other: posts, pages, types, statuses, taxonomies, categories, tags, users, comments
     private \Saloon\Http\Request $request;
 
-    private array $baseParams = [
-        'page' => 1,
-        'per_page' => 100
-    ];
-
     public function __construct(
         private readonly \App\Http\Integrations\WP\WPConnector $connector,
     ){}
 
-    public function fetch(string $type = 'product', array $paramsArr = []): \Saloon\Http\Response
+    public function fetch(string $type = 'product', int $page = 1, int $perPage = 100): \Saloon\Http\Response
     {
-        return $this->connector->send($this->getRequest($type, $paramsArr));
+        return $this->connector->send($this->getRequest($type, $page, $perPage));
     }
 
-    private function getRequest(string $type, array $customParams = []): \Saloon\Http\Request
+    private function getRequest(string $type, int $page = 1, int $perPage = 100): \Saloon\Http\Request
     {
-        $params = new CollectionParams(...array_merge($this->baseParams, $customParams));
-
         $this->request = match ($type) {
-            'product' => new WPProductsRequest($params)
+            'products' => new WPProductsRequest(new CollectionParams(
+                page: $page,
+                per_page: $perPage,
+            )),
         };
 
         return $this->request;
