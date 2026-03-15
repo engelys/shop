@@ -3,6 +3,8 @@
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/test', \App\Http\Controllers\TestController::class)->name('test');
+
 # main page
 Route::get('/', [ShopController::class, 'index'])->name('shop.index');
 # product page

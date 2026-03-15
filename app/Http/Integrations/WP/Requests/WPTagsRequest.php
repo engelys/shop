@@ -6,7 +6,7 @@ use App\Http\Integrations\WP\Params\CollectionParams;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
-class WPTags extends Request
+class WPTagsRequest extends Request
 {
     protected Method $method = Method::GET;
 

@@ -2,11 +2,12 @@
 
 namespace App\Http\Integrations\WP\Requests;
 
+use App\Http\Integrations\WP\Models\WPTagResponse;
 use App\Http\Integrations\WP\Params\EntityParams;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
-class WPAttribute extends Request
+class WPTagRequest extends Request
 {
     protected Method $method = Method::GET;
 
@@ -18,11 +19,11 @@ class WPAttribute extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/wp-json/wc/v3/products/attributes/' . $this->params->id;
+        return '/wp-json/wc/v3/products/tags/' . $this->params->id;
     }
 
     public function responseDto(): string
     {
-        return '';
+        return WPTagResponse::class;
     }
 }

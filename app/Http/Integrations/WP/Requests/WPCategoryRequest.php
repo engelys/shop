@@ -2,12 +2,12 @@
 
 namespace App\Http\Integrations\WP\Requests;
 
-use Saloon\Http\Request;
-use Saloon\Enums\Method;
+use App\Http\Integrations\WP\Models\WPCategoryResponse;
 use App\Http\Integrations\WP\Params\EntityParams;
-use App\Http\Integrations\WP\Models\WPProductResponse;
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
 
-class WPProduct extends Request
+class WPCategoryRequest extends Request
 {
     protected Method $method = Method::GET;
 
@@ -19,11 +19,11 @@ class WPProduct extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/wp-json/wc/v3/products/' . $this->params->id;
+        return '/wp-json/wc/v3/products/categories/' . $this->params->id;
     }
 
     public function responseDto(): string
     {
-        return WPProductResponse::class;
+        return WPCategoryResponse::class;
     }
 }

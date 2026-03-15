@@ -17,18 +17,18 @@ use Saloon\Http\Auth\QueryAuthenticator;
 use App\Http\Integrations\HasDTOGenerator;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
 
-class WPConnector extends Connector implements Cacheable
+class WPConnector extends Connector //implements Cacheable
 {
     use AcceptsJson;
     use HasTimeout;
-    use HasCaching;
+//    use HasCaching;
     use CreatesDtoFromResponse;
     use HasDTOGenerator;
 
-    public function resolveCacheDriver(): Driver
-    {
-        return new LaravelCacheDriver(Cache::store('redis'));
-    }
+//    public function resolveCacheDriver(): Driver
+//    {
+//        return new LaravelCacheDriver(Cache::store('redis'));
+//    }
 
     protected int $connectTimeout = 60;
 
@@ -55,17 +55,17 @@ class WPConnector extends Connector implements Cacheable
         );
     }
 
-    public function cacheExpiryInSeconds(): int
-    {
-        return 600;
-    }
+//    public function cacheExpiryInSeconds(): int
+//    {
+//        return 600;
+//    }
 
     public function createDtoFromResponse(Response $response): mixed
     {
         $data = $response->json();
         $request = $response->getRequest();
 
-        // dd($this->generateDTO(class_basename($request), json_encode($data), __DIR__, __NAMESPACE__));
+//        dd($this->generateDTO(class_basename($request), json_encode($data), __DIR__, __NAMESPACE__));
 
         $dtoModel = $request->responseDto();
         return new $dtoModel($data);

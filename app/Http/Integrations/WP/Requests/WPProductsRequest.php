@@ -6,7 +6,7 @@ use App\Http\Integrations\WP\Params\CollectionParams;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
-class WPProducts extends Request
+class WPProductsRequest extends Request
 {
     protected Method $method = Method::GET;
 
