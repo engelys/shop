@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class ProductRelated extends Model
+{
+    protected $table = 'product_related';
+
+    public $timestamps = false;
+}

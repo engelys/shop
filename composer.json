@@ -41,6 +41,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Zamaldinov28\\JsonModel\\": "packages/zamaldinov28/json-model/src/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
