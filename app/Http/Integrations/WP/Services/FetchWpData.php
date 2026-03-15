@@ -26,7 +26,7 @@ class FetchWpData
     private function getRequest(string $type, int $page = 1, int $perPage = 100): \Saloon\Http\Request
     {
         $this->request = match ($type) {
-            'products' => new WPProductsRequest(new CollectionParams(
+            'product' => new WPProductsRequest(new CollectionParams(
                 page: $page,
                 per_page: $perPage,
             )),
