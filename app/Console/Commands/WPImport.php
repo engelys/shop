@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Integrations\WP\Services\FetchWpData;
 use Illuminate\Console\Command;
 use App\Http\Integrations\WP\Services\WPImportService;
 
@@ -19,8 +20,15 @@ class WPImport extends Command
 
     public function handle(): void
     {
-        $this->importService->collectProducts();
+        $types = [
+            FetchWpData::PRODUCT,
+            FetchWpData::PRODUCT_CAT,
+            FetchWpData::PRODUCT_TAG,
+            FetchWpData::PRODUCT_ATTR
+        ];
+
+        foreach ($types as $type) {
+            $this->importService->collect(dataType: $type);
+        }
     }
-
-
 }

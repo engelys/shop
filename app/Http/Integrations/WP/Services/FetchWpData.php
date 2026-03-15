@@ -3,10 +3,18 @@
 namespace App\Http\Integrations\WP\Services;
 
 use App\Http\Integrations\WP\Params\CollectionParams;
+use App\Http\Integrations\WP\Requests\WPAttributesRequest;
+use App\Http\Integrations\WP\Requests\WPCategoriesRequest;
 use App\Http\Integrations\WP\Requests\WPProductsRequest;
+use App\Http\Integrations\WP\Requests\WPTagsRequest;
 
 class FetchWpData
 {
+    public const PRODUCT = 'product';
+    public const PRODUCT_ATTR = 'product_attr';
+    public const PRODUCT_CAT = 'product_cat';
+    public const PRODUCT_TAG = 'product_tag';
+
     // fetch data by type from wp and save into the wp_data table
 
     // allowed types:
@@ -16,7 +24,9 @@ class FetchWpData
 
     public function __construct(
         private readonly \App\Http\Integrations\WP\WPConnector $connector,
-    ){}
+    )
+    {
+    }
 
     public function fetch(string $type = 'product', int $page = 1, int $perPage = 100): \Saloon\Http\Response
     {
@@ -26,7 +36,19 @@ class FetchWpData
     private function getRequest(string $type, int $page = 1, int $perPage = 100): \Saloon\Http\Request
     {
         $this->request = match ($type) {
-            'product' => new WPProductsRequest(new CollectionParams(
+            self::PRODUCT => new WPProductsRequest(new CollectionParams(
+                page: $page,
+                per_page: $perPage,
+            )),
+            self::PRODUCT_ATTR => new WPAttributesRequest(new CollectionParams(
+                page: $page,
+                per_page: $perPage,
+            )),
+            self::PRODUCT_CAT => new WPCategoriesRequest(new CollectionParams(
+                page: $page,
+                per_page: $perPage,
+            )),
+            self::PRODUCT_TAG => new WPTagsRequest(new CollectionParams(
                 page: $page,
                 per_page: $perPage,
             )),

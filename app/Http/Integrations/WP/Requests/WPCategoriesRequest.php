@@ -18,9 +18,7 @@ class WPCategoriesRequest extends Request
 
     protected function defaultQuery(): array
     {
-        return array_merge([
-            '_fields' => 'id'
-        ], $this->params->all());
+        return $this->params->all();
     }
 
     public function resolveEndpoint(): string
