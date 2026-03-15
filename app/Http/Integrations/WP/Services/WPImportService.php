@@ -2,20 +2,65 @@
 
 namespace App\Http\Integrations\WP\Services;
 
+use App\Actions\CreateProduct;
 use App\Actions\SaveWpData;
+use App\Http\Integrations\WP\Models\WPCategoryResponse;
+use App\Http\Integrations\WP\Models\WPProductResponse;
+use App\Http\Integrations\WP\Models\WPTagResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Zamaldinov28\JsonModel\JSONModel;
 
 final readonly class WPImportService
 {
     public function __construct(
-        private FetchWpData $fetchService,
-        private SaveWpData  $saveWpDataAction
+        private FetchWpData   $fetchService,
+        private SaveWpData    $saveWpDataAction,
+        private CreateProduct $createProductAction
     )
     {
     }
 
     // TODO import products with relations
+
+    public function import(string $dataType, bool $debug = false): void
+    {
+        $logger = Log::channel('wp_import');
+
+        $records = DB::table('wp_data')->where('type', $dataType);
+
+        if ($records->count() === 0) {
+            $logger->error(sprintf('%s: There are no records to import', mb_strtoupper($dataType)));
+            return;
+        }
+
+        $dataClass = $this->getDataClassByType($dataType);
+
+        foreach ($records->cursor() as $record) {
+            $dto = new $dataClass($record->data);
+
+            if ($debug) {
+                dd($dto);
+            }
+
+            if (FetchWpData::PRODUCT == $dataType) {
+                $this->createProductAction->handle($dto);
+            } else {
+                throw new \Exception('Not implemented yet');
+            }
+
+            $logger->info(sprintf('%s: Imported: %s', mb_strtoupper($dataType), $record->key));
+        }
+    }
+
+    private function getDataClassByType(string $dataType): string
+    {
+        return match ($dataType) {
+            FetchWpData::PRODUCT => WPProductResponse::class,
+            FetchWpData::PRODUCT_CAT => WPCategoryResponse::class,
+            FetchWpData::PRODUCT_TAG => WPTagResponse::class,
+        };
+    }
 
     public function collect(string $dataType, bool $debug = false): void
     {

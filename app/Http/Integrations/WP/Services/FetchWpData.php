@@ -18,7 +18,6 @@ class FetchWpData
     // fetch data by type from wp and save into the wp_data table
 
     // allowed types:
-    // product: product, product_cat, product_tag, media,
     // other: posts, pages, types, statuses, taxonomies, categories, tags, users, comments
     private \Saloon\Http\Request $request;
 

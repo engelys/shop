@@ -11,13 +11,13 @@ enum ProductStatus: string implements HasColor, HasIcon, HasLabel, HasDescriptio
 {
     case PUBLISH = 'publish';
     case DRAFT = 'draft';
-    case PENDING = 'pending';
+    case TRASH = 'trash';
 
     public function getColor(): string|array|null
     {
         return match ($this) {
             self::PUBLISH => 'success',
-            self::PENDING => 'warning',
+            self::TRASH => 'warning',
             self::DRAFT => 'gray',
         };
     }
@@ -26,7 +26,7 @@ enum ProductStatus: string implements HasColor, HasIcon, HasLabel, HasDescriptio
     {
         return match ($this) {
             self::PUBLISH => 'heroicon-m-check',
-            self::PENDING => 'heroicon-m-clock',
+            self::TRASH => 'heroicon-m-clock',
             self::DRAFT => 'heroicon-m-pencil',
         };
     }
@@ -39,9 +39,9 @@ enum ProductStatus: string implements HasColor, HasIcon, HasLabel, HasDescriptio
     public function getDescription(): ?string
     {
         return match ($this) {
-            self::PUBLISH => 'This has not finished being written yet.',
-            self::PENDING => 'This is ready for a staff member to read.',
-            self::DRAFT => 'This has been approved by a staff member and is public on the website.',
+            self::PUBLISH => 'This is published record available on the website.',
+            self::TRASH => 'This is deleted record hidden on the website.',
+            self::DRAFT => 'This is hidden on the website record no published yet.',
         };
     }
 }

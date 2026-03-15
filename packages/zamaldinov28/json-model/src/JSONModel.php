@@ -6,12 +6,13 @@ namespace Zamaldinov28\JsonModel;
 
 use Exception;
 use ReflectionClass;
+use Spatie\LaravelData\Data;
 use stdClass;
 use Zamaldinov28\JsonModel\Attributes\AsArray;
 use Zamaldinov28\JsonModel\Attributes\Map;
 use Zamaldinov28\JsonModel\Attributes\MapKeys;
 
-class JSONModel
+class JSONModel extends Data
 {
     /**
      * Parse json from string, array, \stdClass.
