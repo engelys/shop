@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('names')->comment('name translations');
+            $table->json('names')->nullable()->comment('name translations');
             $table->string('slug');
 
             $table->string('permalink')->nullable();
