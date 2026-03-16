@@ -56,10 +56,5 @@ class WPCustomerAddressResponse extends JSONModel
     /**
      * @var ?string
      */
-    public ?string $email = null;
-
-    /**
-     * @var ?string
-     */
     public ?string $phone = null;
 }
