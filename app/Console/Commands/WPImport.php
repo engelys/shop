@@ -8,18 +8,12 @@ use App\Http\Integrations\WP\Services\WPImportService;
 
 class WPImport extends Command
 {
-
     protected $signature = 'wp:import';
-
-    public function __construct(
-        private readonly WPImportService $importService
-    )
-    {
-        parent::__construct();
-    }
 
     public function handle(): void
     {
+        $importService = app(WPImportService::class);
+
         $types = [
             FetchWpData::PRODUCT,
             FetchWpData::PRODUCT_CAT,
@@ -28,7 +22,8 @@ class WPImport extends Command
         ];
 
         foreach ($types as $type) {
-            $this->importService->collect(dataType: $type);
+            // $importService->collect($type);
+            $importService->import(dataType: $type);
         }
     }
 }

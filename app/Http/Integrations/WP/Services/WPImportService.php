@@ -2,6 +2,7 @@
 
 namespace App\Http\Integrations\WP\Services;
 
+use App\Actions\CreateCategory;
 use App\Actions\CreateProduct;
 use App\Actions\SaveWpData;
 use App\Http\Integrations\WP\Models\WPCategoryResponse;
@@ -9,14 +10,14 @@ use App\Http\Integrations\WP\Models\WPProductResponse;
 use App\Http\Integrations\WP\Models\WPTagResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Zamaldinov28\JsonModel\JSONModel;
 
 final readonly class WPImportService
 {
     public function __construct(
-        private FetchWpData   $fetchService,
-        private SaveWpData    $saveWpDataAction,
-        private CreateProduct $createProductAction
+        private FetchWpData    $fetchService,
+        private SaveWpData     $saveWpDataAction,
+        private CreateProduct  $createProductAction,
+        private CreateCategory $createCategoryAction
     )
     {
     }
@@ -43,14 +44,22 @@ final readonly class WPImportService
                 dd($dto);
             }
 
-            if (FetchWpData::PRODUCT == $dataType) {
-                $this->createProductAction->handle($dto);
-            } else {
+            if (!$actionClass = $this->getCreateActionByType($dataType)) {
                 throw new \Exception('Not implemented yet');
             }
 
+            $this->{$actionClass}->handle($dto);
+
             $logger->info(sprintf('%s: Imported: %s', mb_strtoupper($dataType), $record->key));
         }
+    }
+
+    private function getCreateActionByType(string $dataType): string
+    {
+        return match ($dataType) {
+            FetchWpData::PRODUCT => CreateProduct::class,
+            FetchWpData::PRODUCT_CAT => CreateCategory::class
+        };
     }
 
     private function getDataClassByType(string $dataType): string
@@ -59,6 +68,7 @@ final readonly class WPImportService
             FetchWpData::PRODUCT => WPProductResponse::class,
             FetchWpData::PRODUCT_CAT => WPCategoryResponse::class,
             FetchWpData::PRODUCT_TAG => WPTagResponse::class,
+            // FetchWpData::PRODUCT_ATTR => WPTagResponse::class,
         };
     }
 
