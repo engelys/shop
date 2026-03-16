@@ -12,6 +12,12 @@ class Order extends Model
     protected $guarded = false;
 
     protected $casts = [
-        'status' => OrderStatus::class
+        'status' => OrderStatus::class,
+        'line_items' => 'array',
+        'shipping_lines' => 'array',
+        'coupon_lines' => 'array',
+        'refunds' => 'array',
+        'tax_lines' => 'array',
+        'fee_lines' => 'array',
     ];
 }

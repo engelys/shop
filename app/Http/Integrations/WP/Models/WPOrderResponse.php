@@ -14,11 +14,6 @@ class WPOrderResponse extends JSONModel
     public int $id;
 
     /**
-     * @var ?int
-     */
-    public ?int $parent_id = null;
-
-    /**
      * @var string
      */
     public string $number;
@@ -27,6 +22,11 @@ class WPOrderResponse extends JSONModel
      * @var string
      */
     public string $status;
+
+    /**
+     * @var ?int
+     */
+    public ?int $parent_id = null;
 
     /**
      * @var ?string
@@ -154,32 +154,32 @@ class WPOrderResponse extends JSONModel
     public ?string $customer_note = null;
 
     /**
-     * @var ?string
+     * @var ?array
      */
-    public ?string $line_items = null;
+    public ?array $line_items = [];
 
     /**
-     * @var ?string
+     * @var ?array
      */
-    public ?string $shipping_lines = null;
+    public ?array $shipping_lines = [];
 
     /**
-     * @var ?string
+     * @var ?array
      */
-    public ?string $coupon_lines = null;
+    public ?array $coupon_lines = [];
 
     /**
-     * @var ?string
+     * @var ?array
      */
-    public ?string $refunds = null;
+    public ?array $refunds = [];
 
     /**
-     * @var ?string
+     * @var ?array
      */
-    public ?string $tax_lines = null;
+    public ?array $tax_lines = [];
 
     /**
-     * @var ?string
+     * @var ?array
      */
-    public ?string $fee_lines = null;
+    public ?array $fee_lines = [];
 }

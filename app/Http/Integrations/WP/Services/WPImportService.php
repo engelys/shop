@@ -16,6 +16,7 @@ final readonly class WPImportService
         private Actions\CreateCategory $createCategoryAction,
         private Actions\CreateAttr     $createAttrAction,
         private Actions\CreateCustomer $createCustomerAction,
+        private Actions\CreateOrder $createOrderAction,
     )
     {
     }
@@ -58,6 +59,7 @@ final readonly class WPImportService
             //FetchWpData::PRODUCT_TAG => $this->createTagAction,
             FetchWpData::PRODUCT_ATTR => $this->createAttrAction,
             FetchWpData::CUSTOMERS => $this->createCustomerAction,
+            FetchWpData::ORDERS => $this->createOrderAction,
         };
     }
 
