@@ -18,11 +18,13 @@ class WPImport extends Command
             FetchWpData::PRODUCT,
             FetchWpData::PRODUCT_CAT,
             FetchWpData::PRODUCT_TAG,
-            FetchWpData::PRODUCT_ATTR
+            FetchWpData::PRODUCT_ATTR,
+            FetchWpData::CUSTOMERS,
+            FetchWpData::ORDERS
         ];
 
         foreach ($types as $type) {
-            // $importService->collect($type);
+            $importService->collect($type);
             $importService->import(dataType: $type);
         }
     }

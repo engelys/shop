@@ -23,6 +23,10 @@ final readonly class WPImportService
 
     public function import(string $dataType, bool $debug = false): void
     {
+        if ($dataType === FetchWpData::ORDERS) {
+            $customerIds = DB::table('customers')->pluck('id')->flip()->all();
+        }
+
         $logger = Log::channel('wp_import');
 
         $records = DB::table('wp_data')->where('type', $dataType);
@@ -43,6 +47,12 @@ final readonly class WPImportService
 
             if (!$actionClass = $this->getCreateActionByType($dataType)) {
                 throw new \Exception('Not implemented yet');
+            }
+
+            if ($dataClass === Models\WPOrderResponse::class) {
+                if ($dto->customer_id === 0 || !isset($customerIds[$dto->customer_id])) {
+                    $dto->customer_id = null;
+                }
             }
 
             $actionClass->handle($dto);
