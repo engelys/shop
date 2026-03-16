@@ -2,6 +2,7 @@
 
 namespace App\Http\Integrations\WP\Services;
 
+use App\Actions\CreateAction;
 use App\Actions\CreateCategory;
 use App\Actions\CreateProduct;
 use App\Actions\SaveWpData;
@@ -54,11 +55,11 @@ final readonly class WPImportService
         }
     }
 
-    private function getCreateActionByType(string $dataType): string
+    private function getCreateActionByType(string $dataType): CreateAction
     {
         return match ($dataType) {
-            FetchWpData::PRODUCT => CreateProduct::class,
-            FetchWpData::PRODUCT_CAT => CreateCategory::class
+            FetchWpData::PRODUCT => $this->createProductAction,
+            FetchWpData::PRODUCT_CAT => $this->createCategoryAction,
         };
     }
 

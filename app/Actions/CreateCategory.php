@@ -6,7 +6,7 @@ use App\DTOs\CategoryDTO;
 use App\Http\Integrations\WP\Models\WPCategoryResponse;
 use App\Models\Category;
 
-class CreateCategory
+class CreateCategory implements CreateAction
 {
     public function handle(WPCategoryResponse $recordDTO): void
     {

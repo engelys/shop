@@ -6,19 +6,19 @@ use App\DTOs\HotelDTO;
 use App\Http\Integrations\WP\Models\WPProductResponse;
 use App\Models\Product;
 
-class CreateProduct
+class CreateProduct implements CreateAction
 {
-    public function handle(WPProductResponse $productDTO): void
+    public function handle(WPProductResponse $recordDTO): void
     {
-        if (!$productDTO->id) {
+        if (!$recordDTO->id) {
             return;
         }
 
-        if (Product::firstWhere('id', $productDTO->id)) {
+        if (Product::firstWhere('id', $recordDTO->id)) {
             return;
         }
 
-        $hotelDTO = new HotelDTO(...$productDTO->toArray());
+        $hotelDTO = new HotelDTO(...$recordDTO->toArray());
 
         $product = Product::create($hotelDTO->toArray());
 
