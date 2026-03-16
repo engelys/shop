@@ -5,6 +5,7 @@ namespace App\Http\Integrations\WP\Services;
 use App\Http\Integrations\WP\Params\CollectionParams;
 use App\Http\Integrations\WP\Requests\WPAttributesRequest;
 use App\Http\Integrations\WP\Requests\WPCategoriesRequest;
+use App\Http\Integrations\WP\Requests\WPCustomersRequest;
 use App\Http\Integrations\WP\Requests\WPProductsRequest;
 use App\Http\Integrations\WP\Requests\WPTagsRequest;
 
@@ -14,6 +15,7 @@ class FetchWpData
     public const PRODUCT_ATTR = 'product_attr';
     public const PRODUCT_CAT = 'product_cat';
     public const PRODUCT_TAG = 'product_tag';
+    public const CUSTOMERS = 'customers';
 
     // fetch data by type from wp and save into the wp_data table
 
@@ -48,6 +50,10 @@ class FetchWpData
                 per_page: $perPage,
             )),
             self::PRODUCT_TAG => new WPTagsRequest(new CollectionParams(
+                page: $page,
+                per_page: $perPage,
+            )),
+            self::CUSTOMERS => new WPCustomersRequest(new CollectionParams(
                 page: $page,
                 per_page: $perPage,
             )),

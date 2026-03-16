@@ -85,7 +85,7 @@ final readonly class WPImportService
         $page = 1;
 
         do {
-            $logger->info(sprintf('%s: Fetching page: %s', $dataType, $page));
+            $logger->info(sprintf('%s: Fetching page: %s', mb_strtoupper($dataType), $page));
             $response = $this->fetchService->fetch(
                 type: $dataType,
                 page: $page,
