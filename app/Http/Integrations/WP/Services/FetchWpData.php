@@ -12,6 +12,7 @@ class FetchWpData
     public const PRODUCT_CAT = 'product_cat';
     public const PRODUCT_TAG = 'product_tag';
     public const CUSTOMERS = 'customers';
+    public const ORDERS = 'orders';
 
     // fetch data by type from wp and save into the wp_data table
     // other: posts, pages, types, statuses, taxonomies, categories, tags, users, comments
@@ -30,27 +31,15 @@ class FetchWpData
 
     private function getRequest(string $type, int $page = 1, int $perPage = 100): \Saloon\Http\Request
     {
+        $params = new CollectionParams(page: $page, per_page: $perPage);
+
         $this->request = match ($type) {
-            self::PRODUCT => new Requests\WPProductsRequest(new CollectionParams(
-                page: $page,
-                per_page: $perPage,
-            )),
-            self::PRODUCT_ATTR => new Requests\WPAttributesRequest(new CollectionParams(
-                page: $page,
-                per_page: $perPage,
-            )),
-            self::PRODUCT_CAT => new Requests\WPCategoriesRequest(new CollectionParams(
-                page: $page,
-                per_page: $perPage,
-            )),
-            self::PRODUCT_TAG => new Requests\WPTagsRequest(new CollectionParams(
-                page: $page,
-                per_page: $perPage,
-            )),
-            self::CUSTOMERS => new Requests\WPCustomersRequest(new CollectionParams(
-                page: $page,
-                per_page: $perPage,
-            )),
+            self::PRODUCT => new Requests\WPProductsRequest($params),
+            self::PRODUCT_ATTR => new Requests\WPAttributesRequest($params),
+            self::PRODUCT_CAT => new Requests\WPCategoriesRequest($params),
+            self::PRODUCT_TAG => new Requests\WPTagsRequest($params),
+            self::CUSTOMERS => new Requests\WPCustomersRequest($params),
+            self::ORDERS => new Requests\WPOrdersRequest($params),
         };
 
         return $this->request;
