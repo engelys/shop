@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('id')->primary();
             $table->string('name');
             $table->string('slug');
-            $table->json('names')->nullable()->nullable()->comment('name translations');
+            $table->json('names')->nullable()->comment('name translations');
             $table->integer('count')->nullable()->comment('products count used this category');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('display')->nullable()->comment('display enum');

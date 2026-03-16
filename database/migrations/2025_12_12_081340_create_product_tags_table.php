@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('slug');
 
             $table->string('name');
-            $table->json('names')->nullable()->nullable()->comment('name translations');
+            $table->json('names')->nullable()->comment('name translations');
 
             $table->text('description')->nullable();
             $table->json('descriptions')->nullable()->comment('description translations');
