@@ -3,9 +3,11 @@
 namespace App\Http\Integrations\WP\Services;
 
 use App\Actions\CreateAction;
+use App\Actions\CreateAttr;
 use App\Actions\CreateCategory;
 use App\Actions\CreateProduct;
 use App\Actions\SaveWpData;
+use App\Http\Integrations\WP\Models\WPAttrResponse;
 use App\Http\Integrations\WP\Models\WPCategoryResponse;
 use App\Http\Integrations\WP\Models\WPProductResponse;
 use App\Http\Integrations\WP\Models\WPTagResponse;
@@ -18,7 +20,8 @@ final readonly class WPImportService
         private FetchWpData    $fetchService,
         private SaveWpData     $saveWpDataAction,
         private CreateProduct  $createProductAction,
-        private CreateCategory $createCategoryAction
+        private CreateCategory $createCategoryAction,
+        private CreateAttr     $createAttrAction,
     )
     {
     }
@@ -60,6 +63,8 @@ final readonly class WPImportService
         return match ($dataType) {
             FetchWpData::PRODUCT => $this->createProductAction,
             FetchWpData::PRODUCT_CAT => $this->createCategoryAction,
+            //FetchWpData::PRODUCT_TAG => $this->createTagAction,
+            FetchWpData::PRODUCT_ATTR => $this->createAttrAction,
         };
     }
 
@@ -69,7 +74,7 @@ final readonly class WPImportService
             FetchWpData::PRODUCT => WPProductResponse::class,
             FetchWpData::PRODUCT_CAT => WPCategoryResponse::class,
             FetchWpData::PRODUCT_TAG => WPTagResponse::class,
-            // FetchWpData::PRODUCT_ATTR => WPTagResponse::class,
+            FetchWpData::PRODUCT_ATTR => WPAttrResponse::class,
         };
     }
 
