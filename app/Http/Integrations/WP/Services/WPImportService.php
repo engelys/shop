@@ -52,7 +52,7 @@ final readonly class WPImportService
                 throw new \Exception('Not implemented yet');
             }
 
-            $this->{$actionClass}->handle($dto);
+            $actionClass->handle($dto);
 
             $logger->info(sprintf('%s: Imported: %s', mb_strtoupper($dataType), $record->key));
         }

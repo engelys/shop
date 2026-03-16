@@ -2,7 +2,18 @@
 
 namespace App\Models;
 
-class Attribute extends WpData
+use Illuminate\Database\Eloquent\Model;
+
+class Attribute extends Model
 {
-    protected string $wp_record_type = 'attribute';
+    protected $table = 'attr';
+
+    public $incrementing = false;
+    protected $keyType = 'int';
+
+    protected $guarded = false;
+
+    protected $casts = [
+        'names' => 'array'
+    ];
 }
