@@ -2,31 +2,23 @@
 
 namespace App\Http\Integrations\WP\Services;
 
-use App\Actions\CreateAction;
-use App\Actions\CreateAttr;
-use App\Actions\CreateCategory;
-use App\Actions\CreateProduct;
-use App\Actions\SaveWpData;
-use App\Http\Integrations\WP\Models\WPAttrResponse;
-use App\Http\Integrations\WP\Models\WPCategoryResponse;
-use App\Http\Integrations\WP\Models\WPProductResponse;
-use App\Http\Integrations\WP\Models\WPTagResponse;
+use App\Actions;
+use App\Http\Integrations\WP\Models;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 final readonly class WPImportService
 {
     public function __construct(
-        private FetchWpData    $fetchService,
-        private SaveWpData     $saveWpDataAction,
-        private CreateProduct  $createProductAction,
-        private CreateCategory $createCategoryAction,
-        private CreateAttr     $createAttrAction,
+        private FetchWpData            $fetchService,
+        private Actions\SaveWpData     $saveWpDataAction,
+        private Actions\CreateProduct  $createProductAction,
+        private Actions\CreateCategory $createCategoryAction,
+        private Actions\CreateAttr     $createAttrAction,
+        private Actions\CreateCustomer $createCustomerAction,
     )
     {
     }
-
-    // TODO import products with relations
 
     public function import(string $dataType, bool $debug = false): void
     {
@@ -58,23 +50,25 @@ final readonly class WPImportService
         }
     }
 
-    private function getCreateActionByType(string $dataType): CreateAction
+    private function getCreateActionByType(string $dataType): Actions\CreateAction
     {
         return match ($dataType) {
             FetchWpData::PRODUCT => $this->createProductAction,
             FetchWpData::PRODUCT_CAT => $this->createCategoryAction,
             //FetchWpData::PRODUCT_TAG => $this->createTagAction,
             FetchWpData::PRODUCT_ATTR => $this->createAttrAction,
+            FetchWpData::CUSTOMERS => $this->createCustomerAction,
         };
     }
 
     private function getDataClassByType(string $dataType): string
     {
         return match ($dataType) {
-            FetchWpData::PRODUCT => WPProductResponse::class,
-            FetchWpData::PRODUCT_CAT => WPCategoryResponse::class,
-            FetchWpData::PRODUCT_TAG => WPTagResponse::class,
-            FetchWpData::PRODUCT_ATTR => WPAttrResponse::class,
+            FetchWpData::PRODUCT => Models\WPProductResponse::class,
+            FetchWpData::PRODUCT_CAT => Models\WPCategoryResponse::class,
+            FetchWpData::PRODUCT_TAG => Models\WPTagResponse::class,
+            FetchWpData::PRODUCT_ATTR => Models\WPAttrResponse::class,
+            FetchWpData::CUSTOMERS => Models\WPCustomerResponse::class,
         };
     }
 

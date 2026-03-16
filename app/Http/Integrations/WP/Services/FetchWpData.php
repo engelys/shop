@@ -3,11 +3,7 @@
 namespace App\Http\Integrations\WP\Services;
 
 use App\Http\Integrations\WP\Params\CollectionParams;
-use App\Http\Integrations\WP\Requests\WPAttributesRequest;
-use App\Http\Integrations\WP\Requests\WPCategoriesRequest;
-use App\Http\Integrations\WP\Requests\WPCustomersRequest;
-use App\Http\Integrations\WP\Requests\WPProductsRequest;
-use App\Http\Integrations\WP\Requests\WPTagsRequest;
+use App\Http\Integrations\WP\Requests;
 
 class FetchWpData
 {
@@ -18,8 +14,6 @@ class FetchWpData
     public const CUSTOMERS = 'customers';
 
     // fetch data by type from wp and save into the wp_data table
-
-    // allowed types:
     // other: posts, pages, types, statuses, taxonomies, categories, tags, users, comments
     private \Saloon\Http\Request $request;
 
@@ -37,23 +31,23 @@ class FetchWpData
     private function getRequest(string $type, int $page = 1, int $perPage = 100): \Saloon\Http\Request
     {
         $this->request = match ($type) {
-            self::PRODUCT => new WPProductsRequest(new CollectionParams(
+            self::PRODUCT => new Requests\WPProductsRequest(new CollectionParams(
                 page: $page,
                 per_page: $perPage,
             )),
-            self::PRODUCT_ATTR => new WPAttributesRequest(new CollectionParams(
+            self::PRODUCT_ATTR => new Requests\WPAttributesRequest(new CollectionParams(
                 page: $page,
                 per_page: $perPage,
             )),
-            self::PRODUCT_CAT => new WPCategoriesRequest(new CollectionParams(
+            self::PRODUCT_CAT => new Requests\WPCategoriesRequest(new CollectionParams(
                 page: $page,
                 per_page: $perPage,
             )),
-            self::PRODUCT_TAG => new WPTagsRequest(new CollectionParams(
+            self::PRODUCT_TAG => new Requests\WPTagsRequest(new CollectionParams(
                 page: $page,
                 per_page: $perPage,
             )),
-            self::CUSTOMERS => new WPCustomersRequest(new CollectionParams(
+            self::CUSTOMERS => new Requests\WPCustomersRequest(new CollectionParams(
                 page: $page,
                 per_page: $perPage,
             )),
