@@ -69,6 +69,7 @@ final readonly class WPImportService
             FetchWpData::PRODUCT_TAG => Models\WPTagResponse::class,
             FetchWpData::PRODUCT_ATTR => Models\WPAttrResponse::class,
             FetchWpData::CUSTOMERS => Models\WPCustomerResponse::class,
+            FetchWpData::ORDERS => Models\WPOrderResponse::class,
         };
     }
 
