@@ -2,15 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Customer extends Model
+class Customer extends ImportModel
 {
-    public $incrementing = false;
-    protected $keyType = 'int';
-    protected $guarded = false;
-
     public function billing(): HasOne
     {
         return $this->hasOne(CustomerAddress::class, 'customer_id', 'id')

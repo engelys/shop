@@ -153,33 +153,21 @@ class WPOrderResponse extends JSONModel
      */
     public ?string $customer_note = null;
 
-    /**
-     * @var ?array
-     */
-    public ?array $line_items = [];
+//    @working
 
-    /**
-     * @var ?array
-     */
-    public ?array $shipping_lines = [];
+//    /**
+//     * @var ?string
+//     */
+//    public ?string $line_items = null;
 
-    /**
-     * @var ?array
-     */
-    public ?array $coupon_lines = [];
+//    /**
+//     * @var ?array
+//     */
+//    public ?array $shipping_lines = null;
 
-    /**
-     * @var ?array
-     */
-    public ?array $refunds = [];
+//    /**
+//     * @var ?array
+//     */
+//    public ?array $coupon_lines = null;
 
-    /**
-     * @var ?array
-     */
-    public ?array $tax_lines = [];
-
-    /**
-     * @var ?array
-     */
-    public ?array $fee_lines = [];
 }

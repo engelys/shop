@@ -2,16 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Attribute extends Model
+class Attribute extends ImportModel
 {
     protected $table = 'attr';
-
-    public $incrementing = false;
-    protected $keyType = 'int';
-
-    protected $guarded = false;
 
     protected $casts = [
         'names' => 'array'

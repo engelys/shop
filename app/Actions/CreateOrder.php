@@ -17,7 +17,9 @@ class CreateOrder implements CreateAction
             return;
         }
 
-        // $dto = new HotelDTO(...$recordDTO->toArray());
+        if ($recordDTO->customer_id === 0) {
+            $recordDTO->customer_id = null;
+        }
 
         $record = Order::create($recordDTO->toArray());
         $record->saveQuietly();

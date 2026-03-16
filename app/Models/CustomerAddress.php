@@ -2,9 +2,4 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class CustomerAddress extends Model
-{
-    protected $guarded = false;
-}
+class CustomerAddress extends ImportModel {}
