@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Customer extends Model
 {
+    public $incrementing = false;
+    protected $keyType = 'int';
     protected $guarded = false;
 
     public function billing(): HasOne

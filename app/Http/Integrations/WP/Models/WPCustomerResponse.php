@@ -9,9 +9,19 @@ use Zamaldinov28\JsonModel\JSONModel;
 class WPCustomerResponse extends JSONModel
 {
     /**
-     * @var ?int
+     * @var int
      */
-    public ?int $id = null;
+    public int $id;
+
+    /**
+     * @var string
+     */
+    public string $email;
+
+    /**
+     * @var string
+     */
+    public string $username;
 
     /**
      * @var ?string
@@ -31,11 +41,6 @@ class WPCustomerResponse extends JSONModel
     /**
      * @var ?string
      */
-    public ?string $email = null;
-
-    /**
-     * @var ?string
-     */
     public ?string $first_name = null;
 
     /**
@@ -47,11 +52,6 @@ class WPCustomerResponse extends JSONModel
      * @var ?string
      */
     public ?string $role = null;
-
-    /**
-     * @var ?string
-     */
-    public ?string $username = null;
 
     /**
      * @var ?WPCustomerAddressResponse
