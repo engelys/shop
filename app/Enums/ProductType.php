@@ -32,7 +32,11 @@ enum ProductType: string implements HasColor, HasIcon, HasLabel, HasDescription
 
     public function getLabel(): ?string
     {
-        return $this->name;
+        return match ($this) {
+            self::SIMPLE => __('product.type.simple'),
+            self::VARIABLE => __('product.type.variable'),
+            self::GROUPED => __('product.type.grouped'),
+        };
     }
 
     public function getDescription(): ?string
