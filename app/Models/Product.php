@@ -30,6 +30,11 @@ class Product extends ImportModel
         return $this->belongsToMany(Tag::class, 'product_tags');
     }
 
+    public function attributes(): BelongsToMany
+    {
+        return $this->belongsToMany(Attribute::class, 'product_attr', 'product_id', 'attr_id');
+    }
+
     public function main_image(): ?string
     {
         return array_first($this->images)['src'] ?? null;

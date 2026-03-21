@@ -14,13 +14,19 @@ class CreateProduct implements CreateAction
             return;
         }
 
-        if (Product::firstWhere('id', $recordDTO->id)) {
-            return;
-        }
-
         $hotelDTO = new HotelDTO(...$recordDTO->toArray());
 
-        $product = Product::create($hotelDTO->toArray());
+        if (!$product = Product::firstWhere('id', $recordDTO->id)) {
+            $product = Product::create($hotelDTO->toArray());
+        }
+
+        // $images = $recordDTO->images;
+        // $tags = $recordDTO->tags; // array strings
+        $categories = collect($recordDTO->categories)->pluck('id')->all();
+        $product->categories()->sync($categories);
+
+        $attributes = collect($recordDTO->attributes)->pluck('id')->all();
+        $product->attributes()->sync($attributes);
 
         $product->saveQuietly();
     }
