@@ -2,12 +2,13 @@
 
 namespace App\Filament\Resources\Products\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\IconColumn;
+use App\Enums\ProductStockStatus;
+use App\Enums\ProductType;
+use Filament\Actions;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class ProductsTable
@@ -16,107 +17,36 @@ class ProductsTable
     {
         return $table
             ->columns([
+                ImageColumn::make('image')
+                    ->defaultImageUrl(fn($record) => $record->main_image()),
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('slug')
-                    ->searchable(),
-                TextColumn::make('permalink')
-                    ->searchable(),
-                TextColumn::make('type')
-                    ->badge()
-                    ->searchable(),
-                TextColumn::make('status')
-                    ->badge()
-                    ->searchable(),
-                TextColumn::make('catalog_visibility')
-                    ->searchable(),
-                TextColumn::make('sku')
-                    ->label('SKU')
-                    ->searchable(),
-                TextColumn::make('regular_price')
-                    ->searchable(),
-                TextColumn::make('sale_price')
-                    ->searchable(),
-                TextColumn::make('date_on_sale_from')
-                    ->searchable(),
-                TextColumn::make('date_on_sale_to')
-                    ->searchable(),
-                TextColumn::make('external_url')
-                    ->searchable(),
-                TextColumn::make('low_stock_amount')
-                    ->searchable(),
-                TextColumn::make('weight')
-                    ->searchable(),
-                TextColumn::make('shipping_class')
-                    ->searchable(),
-                TextColumn::make('average_rating')
                     ->searchable(),
                 TextColumn::make('stock_status')
                     ->badge()
+                    ->sortable()
                     ->searchable(),
-                IconColumn::make('featured')
-                    ->boolean(),
-                IconColumn::make('on_sale')
-                    ->boolean(),
-                IconColumn::make('purchasable')
-                    ->boolean(),
-                IconColumn::make('virtual')
-                    ->boolean(),
-                IconColumn::make('downloadable')
-                    ->boolean(),
-                IconColumn::make('manage_stock')
-                    ->boolean(),
-                IconColumn::make('sold_individually')
-                    ->boolean(),
-                IconColumn::make('shipping_required')
-                    ->boolean(),
-                IconColumn::make('shipping_taxable')
-                    ->boolean(),
-                IconColumn::make('reviews_allowed')
-                    ->boolean(),
-                IconColumn::make('has_options')
-                    ->boolean(),
                 TextColumn::make('price')
-                    ->money()
-                    ->sortable(),
-                TextColumn::make('total_sales')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('stock_quantity')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('shipping_class_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('rating_count')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('menu_order')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('parent_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
+                    ->money('UAH')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable(),
+                TextColumn::make('categories.name')
+                    ->badge(),
             ])
             ->filters([
-                //
+                SelectFilter::make('stock_status')
+                    ->options(ProductStockStatus::class),
+                SelectFilter::make('type')
+                    ->options(ProductType::class)
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                Actions\ViewAction::make(),
+                Actions\EditAction::make(),
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->filtersLayout(FiltersLayout::AboveContent);
     }
 }
