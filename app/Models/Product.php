@@ -15,6 +15,7 @@ class Product extends ImportModel
         'stock_status' => ProductStockStatus::class,
 
         'names' => 'array',
+        'images' => 'array',
         'descriptions' => 'array',
         'short_descriptions' => 'array',
     ];
@@ -27,5 +28,10 @@ class Product extends ImportModel
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'product_tags');
+    }
+
+    public function main_image(): ?string
+    {
+        return array_first($this->images)['src'] ?? null;
     }
 }
