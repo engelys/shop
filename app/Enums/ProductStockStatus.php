@@ -33,7 +33,11 @@ enum ProductStockStatus: string implements HasColor, HasIcon, HasLabel, HasDescr
 
     public function getLabel(): ?string
     {
-        return $this->name;
+        return match ($this) {
+            self::INSTOCK => __('product.stock_status.instock'),
+            self::ONBACKORDER => __('product.stock_status.onbackorder'),
+            self::OUTOFSTOCK => __('product.stock_status.outofstock'),
+        };
     }
 
     public function getDescription(): ?string
